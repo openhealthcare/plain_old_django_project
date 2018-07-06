@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -19,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# This is overridden in production
 SECRET_KEY = 'uqz8$dtt=zv$+fp8*x#@((734-uxz1yk*&%^@_qxos$_sq^q8)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -118,3 +119,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+if 'test' not in sys.argv:
+    try:
+        from plain_old_django_project.local_settings import *
+    except ImportError:
+        pass
